@@ -53,7 +53,7 @@ except Sects.DoesNotExist:
 
 if sect:
     works_4 = Works.objects.create(
-        title='水連',
+        title='睡蓮',
         sect=sect,
         authors=Authors.objects.get(name="モネ")
     )
