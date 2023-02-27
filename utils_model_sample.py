@@ -61,16 +61,5 @@ else:
     print("Sects.DoesNotExist")
 
 
-
-
-
-# works_1 = Works.objects.create(title='海辺を走る二人の女')
-# works_1.authors.set([author_1])
-# works_1.sects.set([sect_2])
-#
-# works_2 = Works.objects.create(title='踊り子')
-# works_2.authors.set([author_2])
-# works_1.sects.set([sect_2])
-
 # 処理が完了したら終了
 django.db.connections.close_all()
