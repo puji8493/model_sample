@@ -28,7 +28,7 @@ class Authors(models.Model):
 
     name = models.CharField(verbose_name='作者',max_length=50,unique=True)
     age = models.IntegerField(verbose_name='享年')
-    countries = models.ManyToManyField(Countries)
+    countries = models.ForeignKey(Countries,on_delete=models.PROTECT)
     sects = models.ManyToManyField(Sects)
     fly_level = models.IntegerField(verbose_name='ヤバイ度',blank=True)
 
@@ -43,7 +43,8 @@ class Works(models.Model):
     """作品のモデル"""
 
     title = models.CharField(verbose_name='作品名',max_length=50)
-    authors = models.ManyToManyField(Authors)
+    authors = models.ForeignKey(Authors,on_delete=models.CASCADE)
+    sect = models.ForeignKey(Sects,on_delete=models.PROTECT)
 
     class Meta:
         db_table = 'works'

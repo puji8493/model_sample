@@ -6,47 +6,71 @@ from django.conf import settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 
+from authors.models import Authors, Countries, Sects, Works
+
 # ここからDjangoのORMを使用した処理を記述する
-from authors.models import Authors, Countries, Sects,Works
+country_1 = Countries.objects.create(name='Netherlands')
+country_2 = Countries.objects.create(name='France')
+country_3 = Countries.objects.create(name='England')
+country_4 = Countries.objects.create(name='spain')
 
-country_1 = Countries.objects.get_or_create(name='Netherlands')
-country_2 = Countries.objects.get_or_create(name='France')
-country_3 = Countries.objects.get_or_create(name='England')
-country_4 = Countries.objects.get_or_create(name='spain')
+sect_1 = Sects.objects.create(name='impressionism')
+sect_2 = Sects.objects.create(name='neoclassicism')
+sect_3 = Sects.objects.create(name='cubisme')
+sect_4 = Sects.objects.create(name='naturalistic')
 
-sect_1 = Sects.objects.get_or_create(name='Impressionism')
-sect_2 = Sects.objects.get_or_create(name='naturalistic')
-sect_3 = Sects.objects.get_or_create(name='cubisme')
+author_1 = Authors.objects.create(name='ピカソ', age=91, fly_level=5,countries=country_4)
+author_1.sects.add(sect_3)
 
-author_1 = Authors.objects.create(name='ピカソ', age=91, fly_level=5)
-author_1.countries.set([country_4[0]])
-author_1.sects.set([sect_3[0]])
+author_2 = Authors.objects.create(name='ドガ', age=83, fly_level=5,countries=country_2)
+author_2.sects.add(Sects.objects.get(name='naturalistic'))
 
-author_2 = Authors.objects.create(name='ドガ', age=83, fly_level=5)
-author_2.countries.set([country_2[0]])
-author_2.sects.set([sect_1[0]])
+author_3 = Authors.objects.create(name='モネ', age=83, fly_level=3,countries=country_2)
+author_2.sects.add(Sects.objects.get(name='naturalistic'))
 
-author_3 = Authors.objects.create(name='モネ', age=86, fly_level=3)
-author_3.countries.set([country_2[0]])
-author_3.sects.set([sect_1[0]])
+works_1 = Works.objects.create(
+    title='ゲルニカ',
+    sect=Sects.objects.get(name="cubisme"),
+    authors=Authors.objects.get(name="ピカソ")
+)
+
+works_2 = Works.objects.create(
+    title='海辺を走る二人',
+    sect=Sects.objects.get(name="neoclassicism"),
+    authors=Authors.objects.get(name="ピカソ")
+)
+
+works_3 = Works.objects.create(
+    title='踊り子',
+    sect=Sects.objects.get(name="impressionism"),
+    authors=Authors.objects.get(name="ドガ")
+)
+
+try:
+    sect = Sects.objects.get(name="impressionism")
+except Sects.DoesNotExist:
+    sect = None
+
+if sect:
+    works_4 = Works.objects.create(
+        title='水連',
+        sect=sect,
+        authors=Authors.objects.get(name="モネ")
+    )
+else:
+    print("Sects.DoesNotExist")
 
 
-works_1 = Works.objects.get_or_create(title='ゲルニカ')
-works_1[0].authors.add(author_1)
 
-works_2 = Works.objects.get_or_create(title='踊り子')
-works_2[0].authors.add(author_2)
+
+
+# works_1 = Works.objects.create(title='海辺を走る二人の女')
+# works_1.authors.set([author_1])
+# works_1.sects.set([sect_2])
+#
+# works_2 = Works.objects.create(title='踊り子')
+# works_2.authors.set([author_2])
+# works_1.sects.set([sect_2])
 
 # 処理が完了したら終了
 django.db.connections.close_all()
-
-
-# django.core.exceptions.FieldError: Cannot resolve keyword 'author' into field. Choices are: authors, id, title
-# works_1 = Works.objects.get_or_create(title='ゲルニカ', author=author_1)
-# works_2 = Works.objects.get_or_create(title='踊り子', author=author_2)
-
-
-# TypeError: Direct assignment to the forward side of a many-to-many set is prohibited. Use countries.set() instead.
-# author_1 = Authors.objects.create(name='ピカソ', age=91, countries=country_4, sects=sect_3,fly_level=5)
-# author_2 = Authors.objects.create(name='ドガ', age=83, countries=country_2, sects=sect_1,fly_level=5)
-# author_3 = Authors.objects.create(name='モネ', age=86, countries=country_2, sects=sect_1,fly_level=3)
