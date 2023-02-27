@@ -28,7 +28,7 @@ class Authors(models.Model):
 
     name = models.CharField(verbose_name='作者',max_length=50,unique=True)
     age = models.IntegerField(verbose_name='享年')
-    countries = models.ForeignKey(Countries,on_delete=models.PROTECT)
+    countries = models.CharField(verbose_name='国名',max_length=20)
     sects = models.ManyToManyField(Sects)
     fly_level = models.IntegerField(verbose_name='ヤバイ度',blank=True)
 
