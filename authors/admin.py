@@ -5,3 +5,4 @@ admin.site.register(Countries)
 admin.site.register(Authors)
 admin.site.register(Sects)
 admin.site.register(Works)
+

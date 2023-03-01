@@ -5,7 +5,8 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('',include('authors.urls'))
+    path('',include('accounts.urls')),
+    path('accounts/', include('allauth.urls')),
 ]
 
 """画像を表示する設定 settingsがDEBUGの場合、MEDIA_URLとMEDIA_ROOTをurlpatternsに保存する"""
