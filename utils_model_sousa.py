@@ -39,18 +39,20 @@ def get_user():
 
     """CommentモデルとUserモデルを紐付ける"""
     # Comment オブジェクトをcreateメソッドで作る
-    comment1 = Comment.objects.create(user=user_1, works=Works.objects.get(title="笛を吹く少年"), body='コメント1　力強い印象だった')
+    # objects.create() は、インスタンスを作成して保存する
+    comment1 = Comment.objects.create(user=user_1, work=Works.objects.get(title="笛を吹く少年"), body='コメント1　力強い印象だった')
     print("comment1(id): ",comment1.id)  #　数値
     print("comment1(user):", comment1.user)# ユーザーインスタンス
-    print("comment1(works): ", comment1.works)# 作品インスタンス
+    print("comment1(work): ", comment1.work)# 作品インスタンス
     print("comment1(body):", comment1.body) # コメント本文
 
-    # Comment オブジェクトをinstanceを生成してsaveメソッドで作る
-    comment2 = Comment(user=user_2, works=Works.objects.get(title="踊り子"), body='コメント2　ドガ先輩…ヤバイ')
+    # Comment オブジェクト クラスのinstanceを初期化
+    # その後saveメソッドで保存する
+    comment2 = Comment(user=user_2, work=Works.objects.get(title="踊り子"), body='コメント2　ドガ先輩…ヤバイ')
     comment2.save()
     print("comment2(id):",comment2.id)  # 数値
     print("comment2(user):", comment2.user)# ユーザーインスタンス
-    print("comment2(works):", comment2.works)# 作品インスタンス
+    print("comment2(work):", comment2.work)# 作品インスタンス
     print("comment2(body):", comment2.body) # コメント本文
 
     # Comment オブジェクトを1つ更新する
@@ -58,16 +60,15 @@ def get_user():
     comment1.save()
     print("comment1(id): ",comment1.id)  #　数値
     print("comment1(user):", comment1.user)# ユーザーインスタンス
-    print("comment1(works): ", comment1.works)# 作品インスタンス
+    print("comment1(work): ", comment1.work)# 作品インスタンス
     print("comment1(body):", comment1.body) # コメント本文
-
 
     # Comment1オブジェクトに関連付けられた works オブジェクトを変更する
     # 笛を吹く少年 から、Workクラスのtitleが睡蓮のオブジェクトを取得して、comment1.worksに代入する
-    works4 = Works.objects.get(title="睡蓮")
-    comment1.works = works4
+    work4 = Works.objects.get(title="睡蓮")
+    comment1.work = work4
     comment1.save()
-    print(comment1.id, comment1.user, comment1.works.title, comment1.body)  # 数値, ユーザーインスタンス, エントリインスタンス, コメント本文
+    print(comment1.id, comment1.user, comment1.work.title, comment1.body)  # 数値, ユーザーインスタンス, エントリインスタンス, コメント本文
 
 def select_authors():
     authors = Authors.objects.all()

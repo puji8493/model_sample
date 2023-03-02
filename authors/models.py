@@ -57,12 +57,11 @@ class Works(models.Model):
 class Comment(models.Model):
     """
     コメント モデル
-
     works に対するコメント。
     """
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    works = models.ForeignKey(Works, on_delete=models.CASCADE)
+    work = models.ForeignKey(Works, on_delete=models.CASCADE)
     body = models.TextField(verbose_name='コメント本文')
 
     def __str__(self):
