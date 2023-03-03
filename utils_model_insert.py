@@ -5,7 +5,7 @@ import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 
-from authors.models import Authors, Countries, Sects, Works
+from authors.models import Authors, Countries, Sects, Works,Comments
 
 
 def delete_countries():
